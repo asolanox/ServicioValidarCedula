@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validación de Cédula Dominicana</title>
+    <style>
+        body {
+            background-color: beige;
+            font-family: Arial, sans-serif;
+            color: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: left;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: orange;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 90%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: orange;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkorange;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+        #closeButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+		
+		span{
+			text-align: left;
+		}
+    </style>
+</head>
+<body>
+
+		<span>
+		<br>
+			UNIVERSIDAD AUTONOMA DE SANTO DOMINGO<br>
+			Escuela de Informatica<br>
+			Alexander Solano de la Cruz,	AB5972<br>
+			
+		</span>
+		
+		
+		<h1><center><i>Servicio Validador del numero de Cedula Dominicana</i></center></h1>
+		<br>
+		
+		
+    <div class="container">
+        <h1>Validar Cédula Dominicana</h1>
+        <input type="text" id="cedula" placeholder="Ingrese su cédula" maxlength="11">
+        <div class="button-container">
+            <button onclick="validarCedula()">Validar</button>
+            <button onclick="limpiarDatos()">Limpiar Datos</button>
+        </div>
+        <p id="resultado"></p>
+    </div>
+    <button id="closeButton" onclick="cerrarAplicacion()">Cerrar Aplicación</button>
+
+    <script>
+        function validarCedula() {
+            const cedula = document.getElementById('cedula').value;
+            const resultado = document.getElementById('resultado');
+            if (cedula.length !== 11 || isNaN(cedula)) {
+                resultado.textContent = "Por favor, ingrese una cédula válida de 11 dígitos.";
+                return;
+            }
+            const digitos = cedula.split('').map(Number);
+            const total = digitos.slice(0, 10).reduce((sum, num, index) => {
+                const peso = index % 2 === 0 ? 1 : 2;
+                const producto = num * peso;
+                return sum + (producto > 9 ? producto - 9 : producto);
+            }, 0);
+            const digitoVerificador = (10 - (total % 10)) % 10;
+            if (digitoVerificador === digitos[10]) {
+                resultado.textContent = "La cédula es válida.";
+            } else {
+                resultado.textContent = "La cédula no es válida.";
+            }
+        }
+
+        function limpiarDatos() {
+            document.getElementById('cedula').value = '';
+            document.getElementById('resultado').textContent = '';
+        }
+
+        function cerrarAplicacion() {
+            window.close();
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
